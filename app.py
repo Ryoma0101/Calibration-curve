@@ -10,7 +10,8 @@ st.title('検量線グラフ')
 
 # ユーザー入力
 st.write('xとyの値を入力してください:')
-concentration_input = st.text_input('x (カンマ区切り)', '0.1, 0.2, 0.3, 0.4, 0.5')
+concentration_input = st.text_input(
+    '濃度(x) (カンマ区切り)', '0.1, 0.2, 0.3, 0.4, 0.5')
 absorbance_input = st.text_input(
     'y (カンマ区切り)', '0.05, 0.10, 0.15, 0.20, 0.25')
 
@@ -95,7 +96,7 @@ try:
         absorbance_value = float(absorbance_value)
         concentration_value = (absorbance_value - b) / \
             k if not include_origin else absorbance_value / k
-        st.write(f'計算されたx: {concentration_value:.3f}')
+        st.write(f'計算された濃度(x): {concentration_value:.3f}')
     except ValueError:
         st.error('yを正しく入力してください。')
 
