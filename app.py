@@ -9,11 +9,11 @@ from io import BytesIO
 st.title('検量線グラフ')
 
 # ユーザー入力
-st.write('xとyの値を入力してください:')
+st.write('濃度(x)と測定値(y)の値を入力してください:')
 concentration_input = st.text_input(
     '濃度(x) (カンマ区切り)', '0.1, 0.2, 0.3, 0.4, 0.5')
 absorbance_input = st.text_input(
-    'y (カンマ区切り)', '0.05, 0.10, 0.15, 0.20, 0.25')
+    '測定値(y) (カンマ区切り)', '0.05, 0.10, 0.15, 0.20, 0.25')
 
 graph_title = st.text_input('グラフのタイトル', '検量線グラフ')
 x_label = st.text_input('横軸のラベル', 'ex) 濃度 (c)')
@@ -90,15 +90,15 @@ try:
                        file_name='calibration_curve.png', mime='image/png')
 
     # 吸光度から濃度を計算する機能
-    st.write('yからxを計算します:')
-    absorbance_value = st.text_input('yを入力してください', '')
+    st.write('測定値(y)から濃度(x)を計算します:')
+    absorbance_value = st.text_input('測定値(y)を入力してください', '')
     try:
         absorbance_value = float(absorbance_value)
         concentration_value = (absorbance_value - b) / \
             k if not include_origin else absorbance_value / k
         st.write(f'計算された濃度(x): {concentration_value:.3f}')
     except ValueError:
-        st.error('yを正しく入力してください。')
+        st.error('測定値(y)を正しく入力してください。')
 
 except ValueError:
     st.error('数値をカンマで区切って正しく入力してください。')
