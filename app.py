@@ -22,6 +22,10 @@ legend_label = st.text_input('凡例のラベル', 'データ')
 legend_line = st.text_input('近似直線のラベル', '近似直線')
 legend_position = st.selectbox('凡例の位置', ['自動', '右上', '右下', '左上', '左下'])
 include_origin = st.checkbox('原点を通る直線にする', value=True)
+figsize_option = st.selectbox(
+    '図の比率', ['A4横', 'A4縦', '正方形'])
+figsize = {'A4横': (11.69, 8.27), 'A4縦': (
+    8.27, 11.69), '正方形': (8, 8)}[figsize_option]
 
 
 def parse_input(input_str):
@@ -41,7 +45,7 @@ def fit_model(concentration, absorbance, include_origin=True):
 
 
 def plot_graph(concentration, absorbance, k, b=0):
-    plt.figure(figsize=(11.69, 8.27))
+    plt.figure(figsize=figsize)
     plt.xlim(left=0, right=concentration.max() * 1.1)
     plt.ylim(bottom=0, top=absorbance.max() * 1.1)
 
@@ -56,6 +60,9 @@ def plot_graph(concentration, absorbance, k, b=0):
     equation_text = f'y = {k:.3f} x' if include_origin else f'y = {k:.3f} x + {b:.3f}'
     plt.text(x_fit[-1] * 0.7, y_fit[-1] * 0.9,
              equation_text, color='black', fontsize=12)
+
+    plt.minorticks_on()
+    plt.tick_params(axis='both', direction='in', which='both')
 
     # ラベル、凡例、タイトル
     plt.xlabel(x_label, fontsize=12)
